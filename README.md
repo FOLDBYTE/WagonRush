@@ -23,7 +23,6 @@ Play the live demo here: https://wagondash.foldbyte.cz/
 
 ## How to run
 
-### Option A: Open locally
 You can open `index.html` directly in a browser, but some browsers may restrict loading assets due to CORS.
 
 ## Controls
