@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="cs">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#87ceeb" />
+  <title>Wagon Dash 3D</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Start Screen -->
+  <div id="start-screen">
+    <div id="lang-toggle">
+      <button class="lang-btn" data-lang="en">🇬🇧</button>
+      <button class="lang-btn active" data-lang="cs">🇨🇿</button>
+    </div>
+    <h1 id="title">🚂 Útěk vagónů!</h1>
+    <p id="subtitle">Kolik kolejí?</p>
+
+    <div class="track-choice">
+      <div class="track-option selected" data-tracks="2">
+        <div class="icon">🛤️🛤️</div>
+        <div class="label" data-i18n="tracks2">2 koleje</div>
+        <div class="desc" data-i18n="easier">Jednodušší</div>
+      </div>
+      <div class="track-option" data-tracks="3">
+        <div class="icon">🛤️🛤️🛤️</div>
+        <div class="label" data-i18n="tracks3">3 koleje</div>
+        <div class="desc" data-i18n="moreFun">Větší zábava!</div>
+      </div>
+    </div>
+
+    <button id="start-btn" data-i18n="start">▶ Start!</button>
+    <div id="credits-bar">
+      Made with ❤️ by <a href="https://www.foldbyte.cz" target="_blank" rel="noopener noreferrer">FOLDBYTE</a>
+    </div>
+  </div>
+
+  <div id="hud" class="hide">
+    <span id="level-display">Level 1</span>
+    <div class="star-slot"></div>
+    <div class="star-slot"></div>
+    <div class="star-slot"></div>
+    <div class="star-slot"></div>
+    <div class="star-slot"></div>
+  </div>
+
+  <button id="pause-btn" class="hide">
+    <div class="pause-icon"><span></span><span></span></div>
+  </button>
+
+  <div id="pause-menu">
+    <h2 id="pause-title">⏸️ Pauza</h2>
+    <button class="menu-btn resume" data-i18n="resume">▶ Pokračovat</button>
+    <button class="menu-btn restart" data-i18n="restart">🔄 Znovu</button>
+    <button class="menu-btn quit" data-i18n="mainMenu">🏠 Hlavní menu</button>
+  </div>
+
+  <div id="message">Zkusíme jinou cestu! 🚂</div>
+
+  <div id="track-buttons" class="hide">
+    <button class="track-btn track-btn-left" data-lane="0"></button>
+    <button class="track-btn track-btn-center" data-lane="1"></button>
+    <button class="track-btn track-btn-right" data-lane="2"></button>
+  </div>
+
+  <div id="celebration">
+    <h1 id="celebration-title">🎉 Level dokončen! 🎉</h1>
+    <div class="stars">
+      <span>⭐</span>
+      <span>⭐</span>
+      <span>⭐</span>
+    </div>
+    <p id="next-level-text">Připrav se na další level!</p>
+  </div>
+
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="game.js"></script>
+</body>
+
+</html>

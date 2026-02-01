@@ -1,0 +1,782 @@
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #87ceeb;
+    font-family: 'Nunito', system-ui, Segoe UI, Roboto, sans-serif;
+    touch-action: none;
+    overscroll-behavior: none
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap');
+
+/* Mobile-first HUD */
+#hud {
+    position: fixed;
+    left: 8px;
+    top: 8px;
+    z-index: 2;
+    color: #333;
+    background: rgba(255, 255, 255, .92);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+#hud.hide {
+    display: none
+}
+
+#level-display {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-right: 4px;
+}
+
+#level-display.levelup {
+    animation: levelPop 0.5s ease-out;
+}
+
+@keyframes levelPop {
+    0% {
+        transform: scale(1)
+    }
+
+    50% {
+        transform: scale(1.3)
+    }
+
+    100% {
+        transform: scale(1)
+    }
+}
+
+.star-slot {
+    width: 24px;
+    height: 24px;
+    background: #e0e0e0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s;
+}
+
+.star-slot.filled {
+    background: linear-gradient(135deg, #FFD700, #FFA000);
+    animation: pop 0.4s ease-out;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0)
+    }
+
+    50% {
+        transform: scale(1.3)
+    }
+
+    100% {
+        transform: scale(1)
+    }
+}
+
+#message {
+    position: fixed;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    color: #333;
+    background: white;
+    padding: 20px 40px;
+    border-radius: 30px;
+    font-size: 26px;
+    font-weight: 700;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    display: none;
+}
+
+#message.show {
+    display: block;
+    animation: bubble 0.3s ease-out;
+}
+
+@keyframes bubble {
+    0% {
+        transform: translate(-50%, -50%) scale(0)
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1)
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1)
+    }
+}
+
+/* Start Screen */
+#start-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, #87CEEB 0%, #5BA3D9 100%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+#start-screen.hide {
+    display: none
+}
+
+/* Language toggle */
+#lang-toggle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 8px;
+}
+
+.lang-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 8px;
+}
+
+.lang-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.lang-btn.active {
+    border-color: white;
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+#start-screen h1 {
+    font-size: 48px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 4px 4px 0 #0277BD, -2px -2px 0 #0277BD, 2px -2px 0 #0277BD, -2px 2px 0 #0277BD, 0 6px 20px rgba(0, 0, 0, 0.4);
+    margin: 0;
+    text-align: center;
+}
+
+#start-screen p {
+    font-size: 22px;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin: 0;
+}
+
+.track-choice {
+    display: flex;
+    gap: 25px;
+    margin-top: 10px;
+}
+
+.track-option {
+    width: 165px;
+    height: 150px;
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    border: 4px solid transparent;
+}
+
+.track-option:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.track-option:active {
+    transform: scale(0.95);
+}
+
+.track-option.selected {
+    border-color: #4CAF50;
+}
+
+.track-option .icon {
+    font-size: 40px;
+}
+
+.track-option .label {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.track-option .desc {
+    font-size: 13px;
+    color: #666;
+}
+
+#start-btn {
+    margin-top: 15px;
+    padding: 18px 50px;
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.15s;
+    font-family: inherit;
+}
+
+#start-btn:hover {
+    transform: scale(1.05);
+}
+
+#start-btn:active {
+    transform: scale(0.95);
+}
+
+/* Pause button */
+#pause-btn {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 5;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 4px solid white;
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#pause-btn.hide {
+    display: none
+}
+
+#pause-btn .pause-icon {
+    display: flex;
+    gap: 5px;
+}
+
+#pause-btn .pause-icon span {
+    width: 6px;
+    height: 20px;
+    background: white;
+    border-radius: 2px;
+}
+
+/* Pause menu */
+#pause-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 20;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+#pause-menu.show {
+    display: flex
+}
+
+#pause-menu h2 {
+    font-size: 42px;
+    color: white;
+    margin: 0;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.menu-btn {
+    padding: 15px 40px;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.15s;
+    font-family: inherit;
+    min-width: 200px;
+}
+
+.menu-btn:hover {
+    transform: scale(1.05)
+}
+
+.menu-btn:active {
+    transform: scale(0.95)
+}
+
+.menu-btn.resume {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32)
+}
+
+.menu-btn.restart {
+    background: linear-gradient(135deg, #FF9800, #E65100)
+}
+
+.menu-btn.quit {
+    background: linear-gradient(135deg, #f44336, #c62828)
+}
+
+#track-buttons {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    gap: 20px;
+}
+
+#track-buttons.hide {
+    display: none
+}
+
+.track-btn {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s;
+}
+
+.track-btn:active {
+    transform: scale(0.88)
+}
+
+.track-btn-left {
+    background: linear-gradient(135deg, #FF9800, #E65100)
+}
+
+.track-btn-center {
+    background: linear-gradient(135deg, #4CAF50, #1B5E20)
+}
+
+.track-btn-right {
+    background: linear-gradient(135deg, #2196F3, #0D47A1)
+}
+
+.track-btn::before {
+    content: '';
+    width: 26px;
+    height: 26px;
+    background: white;
+}
+
+.track-btn-left::before {
+    clip-path: polygon(100% 0%, 100% 100%, 0% 50%)
+}
+
+.track-btn-center::before {
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%)
+}
+
+.track-btn-right::before {
+    clip-path: polygon(0% 0%, 0% 100%, 100% 50%)
+}
+
+.track-btn.hide {
+    display: none
+}
+
+#celebration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#celebration.show {
+    display: flex
+}
+
+#celebration h1 {
+    font-size: 56px;
+    color: white;
+    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    animation: bounce 0.5s ease-out;
+}
+
+#celebration .stars {
+    font-size: 60px;
+    display: flex;
+    gap: 20px;
+}
+
+#celebration .stars span {
+    animation: spin 1s ease-in-out infinite;
+}
+
+#celebration .stars span:nth-child(2) {
+    animation-delay: 0.2s
+}
+
+#celebration .stars span:nth-child(3) {
+    animation-delay: 0.4s
+}
+
+#celebration #next-level-text {
+    color: white;
+    font-size: 24px;
+    margin-top: 20px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(0)
+    }
+
+    50% {
+        transform: scale(1.2)
+    }
+
+    100% {
+        transform: scale(1)
+    }
+}
+
+@keyframes spin {
+
+    0%,
+    100% {
+        transform: rotate(-10deg) scale(1)
+    }
+
+    50% {
+        transform: rotate(10deg) scale(1.2)
+    }
+}
+
+/* ====== MOBILE RESPONSIVE ====== */
+@media (max-width: 600px) {
+    #lang-toggle {
+        top: 10px;
+        right: 10px;
+        gap: 6px
+    }
+
+    .lang-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 20px;
+        border-width: 2px
+    }
+
+    #start-screen h1 {
+        font-size: 32px
+    }
+
+    #start-screen p {
+        font-size: 18px
+    }
+
+    .track-choice {
+        gap: 15px
+    }
+
+    .track-option {
+        width: 132px;
+        height: 120px
+    }
+
+    .track-option .icon {
+        font-size: 32px
+    }
+
+    .track-option .label {
+        font-size: 16px
+    }
+
+    .track-option .desc {
+        font-size: 11px
+    }
+
+    #start-btn {
+        padding: 14px 35px;
+        font-size: 22px
+    }
+
+    #hud {
+        padding: 6px 10px;
+        gap: 4px;
+        border-radius: 15px
+    }
+
+    #level-display {
+        padding: 2px 6px;
+        font-size: 11px
+    }
+
+    .star-slot {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        font-size: 14px
+    }
+
+    #pause-btn {
+        width: 44px;
+        height: 44px;
+        top: 10px;
+        right: 10px
+    }
+
+    #pause-btn .pause-icon span {
+        width: 5px;
+        height: 16px
+    }
+
+    .track-btn {
+        width: 70px;
+        height: 70px;
+        border-width: 4px
+    }
+
+    .track-btn::before {
+        width: 22px;
+        height: 22px
+    }
+
+    #track-buttons {
+        gap: 20px;
+        padding-bottom: env(safe-area-inset-bottom, 15px)
+    }
+
+    #message {
+        padding: 15px 25px;
+        font-size: 20px;
+        border-radius: 20px
+    }
+
+    #celebration h1 {
+        font-size: 36px
+    }
+
+    #celebration .stars {
+        font-size: 45px;
+        gap: 12px
+    }
+
+    #celebration #next-level-text {
+        font-size: 18px
+    }
+
+    #pause-menu h2 {
+        font-size: 32px
+    }
+
+    .menu-btn {
+        min-width: 160px;
+        padding: 12px 25px;
+        font-size: 18px
+    }
+}
+
+@media (max-width: 400px) {
+    #lang-toggle {
+        top: 8px;
+        right: 8px
+    }
+
+    .lang-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 18px
+    }
+
+    #start-screen h1 {
+        font-size: 26px
+    }
+
+    .track-option {
+        width: 85px;
+        height: 100px
+    }
+
+    .track-option .icon {
+        font-size: 28px
+    }
+
+    .track-option .label {
+        font-size: 14px
+    }
+
+    .track-btn {
+        width: 60px;
+        height: 60px
+    }
+
+    .track-btn::before {
+        width: 18px;
+        height: 18px
+    }
+
+    #track-buttons {
+        gap: 15px
+    }
+
+    #hud {
+        left: 5px;
+        top: 5px
+    }
+
+    .star-slot {
+        width: 18px;
+        height: 18px;
+        font-size: 12px
+    }
+}
+
+/* Landscape on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    #start-screen {
+        gap: 15px;
+        padding: 10px
+    }
+
+    #start-screen h1 {
+        font-size: 28px
+    }
+
+    #start-screen p {
+        font-size: 14px
+    }
+
+    .track-choice {
+        gap: 15px
+    }
+
+    .track-option {
+        width: 90px;
+        height: 90px
+    }
+
+    #start-btn {
+        padding: 10px 30px;
+        font-size: 18px
+    }
+
+    #track-buttons {
+        bottom: 10px
+    }
+
+    .track-btn {
+        width: 55px;
+        height: 55px
+    }
+
+    #celebration h1 {
+        font-size: 28px
+    }
+
+    #celebration .stars {
+        font-size: 35px
+    }
+}
+
+/* Safe area for notched phones */
+@supports (padding: env(safe-area-inset-bottom)) {
+    #track-buttons {
+        padding-bottom: calc(15px + env(safe-area-inset-bottom));
+    }
+
+    #hud {
+        left: calc(8px + env(safe-area-inset-left));
+        top: calc(8px + env(safe-area-inset-top));
+    }
+
+    #pause-btn {
+        right: calc(10px + env(safe-area-inset-right));
+        top: calc(10px + env(safe-area-inset-top));
+    }
+
+    #lang-toggle {
+        right: calc(15px + env(safe-area-inset-right));
+        top: calc(15px + env(safe-area-inset-top));
+    }
+}
+
+#credits-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 6px;
+    text-align: center;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size: 12px;
+    opacity: 0.85;
+    z-index: 9999;
+    pointer-events: auto;
+}
+
+#credits-bar a {
+    color: inherit;
+    text-decoration: underline;
+    font-weight: 700;
+}
